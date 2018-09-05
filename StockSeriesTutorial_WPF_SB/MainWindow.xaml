@@ -1,0 +1,32 @@
+﻿<Window x:Class="StockSeriesTutorial_WPF_SB.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StockSeriesTutorial_WPF_SB"
+        xmlns:lcu="http://schemas.arction.com/semibindablecharting/ultimate/"
+        mc:Ignorable="d"
+        Title="StockSeries Tutorial - WPF Semi-Bindable" Height="450" Width="800">
+    <Grid>
+        <lcu:LightningChartUltimate Name="chart">
+            <lcu:LightningChartUltimate.ViewXY>
+                <lcu:ViewXY>
+                    <lcu:ViewXY.StockSeries>
+                        <lcu:StockSeries x:Name="stockSeries" Style="CandleStick">
+                        </lcu:StockSeries>
+                    </lcu:ViewXY.StockSeries>
+                    <lcu:ViewXY.PointLineSeries>
+                        <lcu:PointLineSeries x:Name="lineSeries">
+                        </lcu:PointLineSeries>
+                    </lcu:ViewXY.PointLineSeries>
+                    <lcu:ViewXY.YAxes>
+                        <lcu:AxisY x:Name="axisY"/>
+                    </lcu:ViewXY.YAxes>
+                    <lcu:ViewXY.XAxes>
+                        <lcu:AxisX x:Name="axisX"/>
+                    </lcu:ViewXY.XAxes>
+                </lcu:ViewXY>
+            </lcu:LightningChartUltimate.ViewXY>
+        </lcu:LightningChartUltimate>
+    </Grid>
+</Window>
