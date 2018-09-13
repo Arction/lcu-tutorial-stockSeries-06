@@ -26,7 +26,7 @@ var stockSeries = new StockSeries(
 );
 
 chart.ViewXY.StockSeries.Add(stockSeries);
-stockSeries.Style = StockStyle.CandleStick;
+stockSeries.Style = StockStyle.OptimizedCandleStick;
 stockSeries.FillBorder.Width = 1;
 stockSeries.Title.Text = "Example Inc.";
 ```
