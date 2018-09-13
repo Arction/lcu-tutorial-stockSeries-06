@@ -54,7 +54,7 @@ namespace StockSeriesTutorial_WPF_NB
             chart.ViewXY.StockSeries.Add(stockSeries);
 
             // 3. Configure the stock plot.
-            stockSeries.Style = StockStyle.CandleStick;
+            stockSeries.Style = StockStyle.OptimizedCandleStick;
             stockSeries.FillBorder.Width = 1;
             stockSeries.Title.Text = "Example Inc.";
 

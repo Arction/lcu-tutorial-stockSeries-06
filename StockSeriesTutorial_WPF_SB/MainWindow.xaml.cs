@@ -37,7 +37,7 @@ namespace StockSeriesTutorial_WPF_SB
             axisY.Title.Text = "Price";
 
             // 2. Configure the stock plot
-            stockSeries.Style = StockStyle.CandleStick;
+            stockSeries.Style = StockStyle.OptimizedCandleStick;
             stockSeries.FillBorder.Width = 1;
             stockSeries.Title.Text = "Example Inc.";
 
