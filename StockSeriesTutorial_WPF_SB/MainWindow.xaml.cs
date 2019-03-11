@@ -34,11 +34,11 @@ namespace StockSeriesTutorial_WPF_SB
             // 1. Configure X- and Y-axes.
 
             // X-axis configuration.
-            xAxis.Title.Text = "Date";
-            xAxis.MajorDiv = 24 * 60 * 60; // Major division is one day in seconds.
+            axisX.Title.Text = "Date";
+            axisX.MajorDiv = 24 * 60 * 60; // Major division is one day in seconds.
 
             // Y-axis configuration.
-            yAxis.Title.Text = "Price";
+            axisY.Title.Text = "Price";
 
             // 2. Create a new StockSeries.
             // This is done using XAML.
@@ -73,7 +73,7 @@ namespace StockSeriesTutorial_WPF_SB
             {
                 closeData[i] = new SeriesPoint()
                 {
-                    X = yAxis.DateTimeToAxisValue(stockData[i].Date),
+                    X = axisY.DateTimeToAxisValue(stockData[i].Date),
                     Y = stockData[i].Close
                 };
             }

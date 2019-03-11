@@ -39,18 +39,18 @@ namespace StockSeriesTutorial_WPF_NB
             // 1. Configure X- and Y-axes.
 
             // X-axis configuration.
-            var xAxis = chart.ViewXY.XAxes[0];
-            xAxis.Title.Text = "Date";
-            xAxis.ValueType = AxisValueType.DateTime;
-            xAxis.LabelsAngle = 90;
-            xAxis.MajorDiv = 24 * 60 * 60; // Major division is one day in seconds.
+            var axisX = chart.ViewXY.XAxes[0];
+            axisX.Title.Text = "Date";
+            axisX.ValueType = AxisValueType.DateTime;
+            axisX.LabelsAngle = 90;
+            axisX.MajorDiv = 24 * 60 * 60; // Major division is one day in seconds.
 
             // Y-axis configuration.
-            var yAxis = chart.ViewXY.YAxes[0];
-            yAxis.Title.Text = "Price";
+            var axisY = chart.ViewXY.YAxes[0];
+            axisY.Title.Text = "Price";
 
             // 2. Create a new StockSeries.
-            var stockSeries = new StockSeries(chart.ViewXY, xAxis, yAxis);
+            var stockSeries = new StockSeries(chart.ViewXY, axisX, axisY);
             chart.ViewXY.StockSeries.Add(stockSeries);
 
             // 3. Configure the stock plot.
@@ -80,7 +80,7 @@ namespace StockSeriesTutorial_WPF_NB
             {
                 closeData[i] = new SeriesPoint()
                 {
-                    X = xAxis.DateTimeToAxisValue(stockData[i].Date),
+                    X = axisX.DateTimeToAxisValue(stockData[i].Date),
                     Y = stockData[i].Close
                 };
             }

@@ -20,11 +20,11 @@
                         </lcu:PointLineSeries>
                     </lcu:ViewXY.PointLineSeries>
                     <lcu:ViewXY.YAxes>
-                        <lcu:AxisY x:Name="xAxis"/>
+                        <lcu:AxisY x:Name="axisY"/>
                     </lcu:ViewXY.YAxes>
                     <lcu:ViewXY.XAxes>
                         <lcu:AxisX 
-                            x:Name="yAxis" 
+                            x:Name="axisX" 
                             ValueType="DateTime" 
                             LabelsAngle="90"/>
                     </lcu:ViewXY.XAxes>
