@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------------------------------------------------
-// LightningChart® example code: StockSeries chart.
+// LightningChart® example code: StockSeries Chart Demo.
 //
 // If you need any assistance, or notice error in this example code, please contact support@arction.com. 
 //
@@ -7,14 +7,14 @@
 //
 // http://arction.com/ | support@arction.com | sales@arction.com
 //
-// © Arction Ltd 2009-2018. All rights reserved.  
+// © Arction Ltd 2009-2019. All rights reserved.  
 // ------------------------------------------------------------------------------------------------------
 using System.Drawing;
 using System.Windows.Forms;
 
-// Arction namespaces 
-using Arction.WinForms.Charting;          // LightningChartUltimate and general types
-using Arction.WinForms.Charting.SeriesXY; // Series for 2D chart
+// Arction namespaces.
+using Arction.WinForms.Charting;          // LightningChartUltimate and general types.
+using Arction.WinForms.Charting.SeriesXY; // Series for 2D chart.
 
 namespace StockSeriesTutorial_WF
 {
@@ -24,33 +24,33 @@ namespace StockSeriesTutorial_WF
         {
             InitializeComponent();
 
-            // Create chart instance and store it member variable.
+            // Create chart.
             var chart = new LightningChartUltimate();
             chart.Title.Text = "Stock Series";
+
+            // Disable rendering before updating chart properties to improve performance
+            // and to prevent unnecessary chart redrawing while changing multiple properties.
+            chart.BeginUpdate();
 
             // Set chart control into the parent container.
             chart.Parent = this;         //Set form as parent.
             chart.Dock = DockStyle.Fill; //Maximize to parent client area.
 
-            // 1. Store references to default axes for a quick access.
+            // 1. Configure X- and Y-axes.
 
-            // store reference to default axisX and configure
+            // X-axis configuration.
             var axisX = chart.ViewXY.XAxes[0];
             axisX.Title.Text = "Date";
             axisX.ValueType = AxisValueType.DateTime;
             axisX.LabelsAngle = 90;
-            axisX.MajorDiv = 24 * 60 * 60; //Major Div is one day in seconds
+            axisX.MajorDiv = 24 * 60 * 60; //Major division is one day in seconds.
 
-            // store reference to default axisX and configure
+            // Y-axis configuration.
             var axisY = chart.ViewXY.YAxes[0];
             axisY.Title.Text = "Price";
 
             //2. Create a new StockSeries.
-            var stockSeries = new StockSeries(
-                chart.ViewXY,
-                axisX,
-                axisY
-                );
+            var stockSeries = new StockSeries(chart.ViewXY, axisX, axisY);
 
             chart.ViewXY.StockSeries.Add(stockSeries);
 
@@ -78,7 +78,7 @@ namespace StockSeriesTutorial_WF
             // 5. Create a reference to the loaded data points.
             var stockData = stockSeries.DataPoints;
 
-            // 6. Prepare data for line-series, which matches closed values.
+            // 6. Generate data for series, which matches closed values.
             var closeData = new SeriesPoint[stockData.Length];
             for (var i = 0; i < stockData.Length; i++)
             {
@@ -89,21 +89,25 @@ namespace StockSeriesTutorial_WF
                 };
             }
 
-            // 7. Add PointLineSeries to show the dynamic in closed values on Stock Exchange.
+            // 7. Create a new PointLineSeries to show the dynamic in closed values on Stock Exchange.
             var lineSeries = new PointLineSeries();
             lineSeries.Title.Text = "Example Inc.";
             lineSeries.Points = closeData;
             chart.ViewXY.PointLineSeries.Add(lineSeries);
 
-            // Auto-scale X and Y axes.
+            // 8. Auto-scale X- and Y-axes.
             chart.ViewXY.ZoomToFit();
 
             #region Hidden polishing
             CustomizeChart(chart);
             #endregion
 
+            // Call EndUpdate to enable rendering again.
+            chart.EndUpdate();
+
         }
 
+        #region Hidden polishing
         private void CustomizeChart(LightningChartUltimate chart)
         {
             chart.Background.Color = Color.FromArgb(255, 30, 30, 30);
@@ -131,5 +135,6 @@ namespace StockSeriesTutorial_WF
                 xAxis.MinorDivTickStyle.Visible = false;
             }
         }
+        #endregion
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:StockSeriesTutorial_WPF_SB"
         xmlns:lcu="http://schemas.arction.com/semibindablecharting/ultimate/"
         mc:Ignorable="d"
-        Title="StockSeries Tutorial - WPF Semi-Bindable" Height="450" Width="800">
+        Title="LightningChart Tutorial - StockSeries" Height="450" Width="800">
     <Grid>
         <lcu:LightningChartUltimate Name="chart">
             <lcu:LightningChartUltimate.ViewXY>
@@ -20,10 +20,13 @@
                         </lcu:PointLineSeries>
                     </lcu:ViewXY.PointLineSeries>
                     <lcu:ViewXY.YAxes>
-                        <lcu:AxisY x:Name="axisY"/>
+                        <lcu:AxisY x:Name="xAxis"/>
                     </lcu:ViewXY.YAxes>
                     <lcu:ViewXY.XAxes>
-                        <lcu:AxisX x:Name="axisX"/>
+                        <lcu:AxisX 
+                            x:Name="yAxis" 
+                            ValueType="DateTime" 
+                            LabelsAngle="90"/>
                     </lcu:ViewXY.XAxes>
                 </lcu:ViewXY>
             </lcu:LightningChartUltimate.ViewXY>

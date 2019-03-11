@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------------------------------------------------
-// LightningChart® example code: Stock Chart.
+// LightningChart® example code: StockSeries Chart Demo.
 //
 // If you need any assistance, or notice error in this example code, please contact support@arction.com. 
 //
@@ -7,15 +7,15 @@
 //
 // http://arction.com/ | support@arction.com | sales@arction.com
 //
-// © Arction Ltd 2009-2018. All rights reserved.  
+// © Arction Ltd 2009-2019. All rights reserved.  
 // ------------------------------------------------------------------------------------------------------
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Controls;
 
-// Arction namespaces 
-using Arction.Wpf.Charting;          // LightningChartUltimate and general types
-using Arction.Wpf.Charting.SeriesXY; // Series for 2D chart
+// Arction namespaces.
+using Arction.Wpf.Charting;          // LightningChartUltimate and general types.
+using Arction.Wpf.Charting.SeriesXY; // Series for 2D chart.
 
 namespace StockSeriesTutorial_WPF_NB
 {
@@ -25,32 +25,32 @@ namespace StockSeriesTutorial_WPF_NB
         {
             InitializeComponent();
 
-            // Create chart instance and store it member variable.
+            // Create chart.
             var chart = new LightningChartUltimate();
             chart.Title.Text = "Stock Series";
+
+            // Disable rendering before updating chart properties to improve performance
+            // and to prevent unnecessary chart redrawing while changing multiple properties.
+            chart.BeginUpdate();
 
             // Set chart control into the parent container.
             (Content as Grid).Children.Add(chart);
 
-            // 1. Store references to default axes for a quick access.
+            // 1. Configure X- and Y-axes.
 
-            // store reference to default axisX and configure
-            var axisX = chart.ViewXY.XAxes[0];
-            axisX.Title.Text = "Date";
-            axisX.ValueType = AxisValueType.DateTime;
-            axisX.LabelsAngle = 90;
-            axisX.MajorDiv = 24 * 60 * 60; //Major Div is one day in seconds
+            // X-axis configuration.
+            var xAxis = chart.ViewXY.XAxes[0];
+            xAxis.Title.Text = "Date";
+            xAxis.ValueType = AxisValueType.DateTime;
+            xAxis.LabelsAngle = 90;
+            xAxis.MajorDiv = 24 * 60 * 60; // Major division is one day in seconds.
 
-            // store reference to default axisX and configure
-            var axisY = chart.ViewXY.YAxes[0];
-            axisY.Title.Text = "Price";
+            // Y-axis configuration.
+            var yAxis = chart.ViewXY.YAxes[0];
+            yAxis.Title.Text = "Price";
 
             // 2. Create a new StockSeries.
-            var stockSeries = new StockSeries(
-                chart.ViewXY,
-                axisX,
-                axisY
-            );
+            var stockSeries = new StockSeries(chart.ViewXY, xAxis, yAxis);
             chart.ViewXY.StockSeries.Add(stockSeries);
 
             // 3. Configure the stock plot.
@@ -74,31 +74,35 @@ namespace StockSeriesTutorial_WPF_NB
             // 5. Create a reference to the loaded data points.
             var stockData = stockSeries.DataPoints;
 
-            // 6. Prepare data for line-series, which matches closed values.
+            // 6. Generate data for series, which matches closed values.
             var closeData = new SeriesPoint[stockData.Length];
             for (var i = 0; i < stockData.Length; i++)
             {
                 closeData[i] = new SeriesPoint()
                 {
-                    X = axisX.DateTimeToAxisValue(stockData[i].Date),
+                    X = xAxis.DateTimeToAxisValue(stockData[i].Date),
                     Y = stockData[i].Close
                 };
             }
 
-            // 7. Add PointLineSeries to show the dynamic in closed values on Stock Exchange.
+            // 7. Create a new PointLineSeries to show the dynamic in closed values on Stock Exchange.
             var lineSeries = new PointLineSeries();
             lineSeries.Title.Text = "Example Inc.";
             lineSeries.Points = closeData;
             chart.ViewXY.PointLineSeries.Add(lineSeries);
 
-            // Auto-scale X and Y axes.
+            // 8. Auto-scale X- and Y-axes.
             chart.ViewXY.ZoomToFit();
 
             #region Hidden polishing
             CustomizeChart(chart);
             #endregion
+
+            // Call EndUpdate to enable rendering again.
+            chart.EndUpdate();
         }
 
+        #region Hidden polishing
         private void CustomizeChart(LightningChartUltimate chart)
         {
             chart.ChartBackground.Color = Color.FromArgb(255, 30, 30, 30);
@@ -126,5 +130,6 @@ namespace StockSeriesTutorial_WPF_NB
                 xAxis.MinorDivTickStyle.Visible = false;
             }
         }
+        #endregion
     }
 }

@@ -2,36 +2,43 @@
 
 This tutorial explains how to load financial data from a CSV file and display it using *LightningChart StockSeries*. Stock series are used to visualize stock exchange data in candlestick and stock bars formats. The tutorial assumes that you have created a new chart with *LightningChart* on a WinForms or WPF application. If not, please follow our [Simple 2D Chart](https://www.arction.com/tutorials/#/lcu_tutorial_simple2Dchart_01) on creating an application. 
 
-![screenshot](./assets/stockSeries_screenshot.png)
-#####  1. Store references to default axes for a quick access and configure X axis to display values as dates.  
-```csharp
-// store reference to default axisX and configure
-var axisX = chart.ViewXY.XAxes[0];
-axisX.Title.Text = "Date";
-axisX.ValueType = AxisValueType.DateTime;
-axisX.LabelsAngle = 90;
-axisX.MajorDiv = 24 * 60 * 60; //Major Div is one day in seconds
+![](./assets/chart-stockseries-2d-winforms-wpf.png)
 
-// store reference to default axisX and configure
-var axisY = chart.ViewXY.YAxes[0];
-axisY.Title.Text = "Price";
+#####  1. Define variables for X- and Y-axis and configure X-axis to display values as dates.
+
+```csharp
+// Configure X- and Y-axes.
+
+// X-axis configuration.
+var xAxis = chart.ViewXY.XAxes[0];
+xAxis.Title.Text = "Date";
+xAxis.ValueType = AxisValueType.DateTime;
+xAxis.LabelsAngle = 90;
+xAxis.MajorDiv = 24 * 60 * 60; //Major division is one day in seconds
+
+// Y-axis configuration.
+var yAxis = chart.ViewXY.YAxes[0];
+yAxis.Title.Text = "Price";
 ```
 
-##### 2. Create a new StockSeries to hold the stock information and configure it
-```csharp
-var stockSeries = new StockSeries(
-    chart.ViewXY,
-    axisX,
-    axisY
-);
+##### 2. Create a new StockSeries to hold the stock information.
 
+```csharp
+// Create a new StockSeries.
+var stockSeries = new StockSeries(chart.ViewXY, xAxis, yAxis);
 chart.ViewXY.StockSeries.Add(stockSeries);
-stockSeries.Style = StockStyle.CandleStick;
+```
+
+##### 3. Configure the stock plot.
+
+```csharp
+// Configure the stock plot.
+stockSeries.Style = StockStyle.OptimizedCandleStick;
 stockSeries.FillBorder.Width = 1;
 stockSeries.Title.Text = "Example Inc.";
 ```
 
-##### 3. Load the data.
+##### 4. Load the data.
 
 Load the data from a CSV file into the series data points using `series.LoadFromCSV(string fileName, SeparatorCSV separator)`. The data has to be organized in columns in the following order:
     
@@ -43,31 +50,43 @@ Series values can be written into a file using `series.SaveToCSV`, which is a pa
 
 ```csharp
 stockSeries.LoadFromCSV("../../../data/data.csv", SeparatorCSV.Semicolon);
+```
+
+##### 5. Create a reference to the loaded data points.
+
+```csharp
 // Create a reference to the loaded data points.
 var stockData = stockSeries.DataPoints;
 ```
 
-##### 4. Prepare data for line series which matches closed values.
+##### 6. Generate data for series which matches closed values.
+
 ```csharp
+// Generate data for series, which matches closed values.
 var closeData = new SeriesPoint[stockData.Length];
 for (var i = 0; i < stockData.Length; i++)
 {
     closeData[i] = new SeriesPoint()
     {
-        X = axisX.DateTimeToAxisValue(stockData[i].Date),
+        X = xAxis.DateTimeToAxisValue(stockData[i].Date),
         Y = stockData[i].Close
     };
 }
+```
 
-// Add PointLineSeries to show the dynamic in closed values on Stock Exchange.
+##### 7. Create a new PointLineSeries to show the dynamic in closed values on Stock Exchange.
+
+```csharp
+// Create a new PointLineSeries to show the dynamic in closed values on Stock Exchange.
 var lineSeries = new PointLineSeries();
 lineSeries.Title.Text = "Example Inc.";
 lineSeries.Points = closeData;
 chart.ViewXY.PointLineSeries.Add(lineSeries);
 ```
 
-##### 5. Call ZoomToFit to scale axes to match data in the series.
+##### 8. Auto-scale axes to show all series data.
+
 ```csharp
-//Auto-scale X and Y axes.
+//Auto-scale X- and Y-axes.
 chart.ViewXY.ZoomToFit();
 ```

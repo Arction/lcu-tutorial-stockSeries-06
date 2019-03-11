@@ -6,6 +6,6 @@
         xmlns:local="clr-namespace:StockSeriesTutorial_WPF_NB"
         xmlns:lcu="http://schemas.arction.com/charting/ultimate/"
         mc:Ignorable="d"
-        Title="StockSeries Tutorial - WPF Non-Bindable" Height="450" Width="800">
+        Title="LightningChart Tutorial - StockSeries" Height="450" Width="800">
     <Grid />
 </Window>
