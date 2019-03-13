@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------------------------------------------------
-// LightningChart® example code: StockSeries Chart Demo.
+// LightningChart® example code: StockSeries Chart for Presenting Financial Data Demo.
 //
 // If you need any assistance, or notice error in this example code, please contact support@arction.com. 
 //
